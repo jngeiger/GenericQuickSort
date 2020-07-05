@@ -1,16 +1,20 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class QuickSort {
     public static void main(String[] args)
     {
         Float[] array = new Float[]{23.0f,8.0f,231.33f,15.99f,16.23f,42.22f,4.3f};
         var list = Arrays.asList(array);
-        quickSort(list);
+        var list2 = new LinkedList<Integer>();
+        for (Float t : list)
+        {
+            list2.add(Integer.valueOf(t.intValue()));
+        }
 
-        System.out.println(Arrays.toString(array));
+
+        quickSort(list2);
+
+        System.out.println(list2);
     }
 
     public static <T extends Comparable<T>> void quickSort(List<T> list)
