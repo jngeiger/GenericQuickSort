@@ -1,28 +1,47 @@
 import java.util.*;
 
-public class QuickSort {
+public class QuickSort<T extends Comparable<T>> {
     public static void main(String[] args)
     {
-        Float[] array = new Float[]{23.0f,8.0f,231.33f,15.99f,16.23f,42.22f,4.3f};
-        var list = Arrays.asList(array);
-        var list2 = new LinkedList<Integer>();
-        for (Float t : list)
-        {
-            list2.add(Integer.valueOf(t.intValue()));
-        }
-
-
-        quickSort(list2);
-
-        System.out.println(list2);
+        // Implemented once by Hoare and once with 3-way-partitioning
     }
 
-    public static <T extends Comparable<T>> void quickSort(List<T> list)
+    public void quickSortHoare(List<T> list)
+    {
+        quickSortRecHoare(list,0,list.size()-1);
+    }
+
+    private void quickSortRecHoare(List<T> list,int l, int r)
+    {
+        if (r-l < 1) return;
+        else {
+            int pivot = _partitionHoare(list,l,r);
+            quickSortRecHoare(list,l,pivot);
+            quickSortRecHoare(list,pivot+1,r);
+        }
+    }
+
+    private int _partitionHoare(List<T> list, int l, int r)
+    {
+        int lidx = l-1; int ridx = r+1; T pivot = list.get(l);
+        while (true) {
+            do {
+                lidx++;
+            } while (list.get(lidx).compareTo(pivot) == -1);
+            do {
+                ridx--;
+            } while (list.get(ridx).compareTo(pivot) == 1);
+            if (lidx >= ridx) return ridx;
+            else swapAtIndex(list,lidx,ridx);
+        }
+    }
+
+    private void quickSort(List<T> list)
     {
         quickSortRec(list,0,list.size()-1);
     }
 
-    public static <T extends Comparable<T>> void quickSortRec(List<T> list, int l, int r)
+    public void quickSortRec(List<T> list, int l, int r)
     {
         if (r-l < 1)
         {
@@ -35,7 +54,7 @@ public class QuickSort {
         }
     }
 
-    private static <T extends Comparable<T>> int[] _partition(List<T> list, int l, int r)
+    private int[] _partition(List<T> list, int l, int r)
     {
         int smaller = l;
         int equal = l;
@@ -59,7 +78,7 @@ public class QuickSort {
         return new int[] {smaller,bigger};
     }
 
-    private static <T extends Comparable<T>> void swapAtIndex(List<T> list, int one, int two)
+    private void swapAtIndex(List<T> list, int one, int two)
     {
 
         T temp = list.get(one);
